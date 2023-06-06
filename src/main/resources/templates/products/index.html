@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout"
+      xmlns:custom="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>List Laptop</title>
+</head>
+<body>
+<div layout:fragment="content" class="container body-content">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Specs</th>
+            <th scope="col">Price</th>
+            <th scope="col">Manufacturer</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="laptop : ${listlaptop}" >
+            <th scope="row" th:text="${laptop.id}"></th>
+            <td th:text="${laptop.name}"></td>
+            <!--   <td th:text="${product.image}"></td> -->
+            <td>
+                <img height="120" width="150" th:src="@{/images/} + ${laptop.image}"/>
+            </td>
+            <td th:text="${laptop.specs}"></td>
+            <td th:text="${laptop.price}"></td>
+            <td th:text="${laptop.manufacturer.name}"></td>
+            <td>
+                <span sec:authorize="hasAuthority('ROLE_SALES')">
+                   <a th:href="@{/products/edit/{id}(id=${laptop.id})}" custom:linkMethod="post"  class="btn btn-secondary">Edit</a>
+                </span>
+                <span sec:authorize="hasAuthority('ROLE_USER')">
+                  <a th:href="@{/shoppingcart/add/{id} (id=${laptop.id})}" class="btn btn-primary">Buy now</a>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

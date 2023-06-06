@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly san pham</title>
+</head>
+<body>
+<div layout:fragment="content" class="container body-content">
+    <form th:action="@{~/admin/products/create}" th:object="${laptop}" method="post" class="form" enctype = "multipart/form-data">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" th:field="*{name}" id="name"  placeholder="Laptop Name">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <!--                <input class="form-control" type="text" th:field="*{image}" id="image" placeholder="image">-->
+            <input class="form-control" type="file" id="image" name="imageProduct" accept="image/png, image/jpeg">
+            <!--                <div class="alert alert-warning" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>-->
+        </div>
+        <div class="form-group">
+            <label for="name">Specs</label>
+            <input class="form-control" type="text" th:field="*{specs}" id="specs"  placeholder="Specs">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('specs')}" th:errors="*{specs}"></div>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input class="form-control" type="number" th:field="*{price}" id="price" placeholder="price">
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+        </div>
+
+        <div>
+            <label for="manu">Manufacturer:</label>
+            <select id="manu" name="manu" th:field="*{manufacturer}" required>
+                <option value="">Select a manufacturer</option>
+                <option th:each="manufacturer : ${listmanu}" th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
+            </select>
+        </div>
+        <input type="submit"  class="btn btn-success" value="Add Product">
+    </form>
+</div>
+</body>
+</html>
+
